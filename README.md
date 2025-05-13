@@ -4,6 +4,8 @@ Build models to predict loan approval using the Kaggle Loan Approval Prediction 
 
 The loan approval dataset is a collection of financial records and associated information used to determine the eligibility of individuals or organizations for obtaining loans from a lending institution. It includes various factors such as CIBIL score, income, employment status, loan term, loan amount, asset value, and loan status. This dataset is commonly used in machine learning and data analysis to develop models and algorithms that predict the likelihood of loan approval based on the given features.
 
+The program also allows users to input their own data and receive a loan approval prediction based on the best performed trained model.
+
 Note: The dataset was originally sourced from Kaggle but used locally to ensure long-term accessibility and avoid internet dependency.
 
 ---
@@ -196,6 +198,23 @@ pip install -r requirements.txt
 ```bash
 jupyter notebook Loan_Approval.ipynb
 ```
+
+---
+
+## User Input
+
+In the final section of the code, users can manually enter the features that describe their financial situation (e.g., income, credit score, assets). The program then outputs a prediction using the **Decision Tree Classifier**, which was selected due to its superior accuracy.
+
+This interactive feature allows users to explore potential loan approval outcomes in real time, based on their individual data.
+
+---
+
+## Future Work
+
+- Incorporate more advanced models such as Random Forests or Gradient Boosting.
+- Perform hyperparameter tuning to further optimize model performance.
+- Deploy the model with a simple web interface (e.g., using Streamlit or Flask).
+- Implement cross-validation for more robust evaluation.
 
 ---
 
