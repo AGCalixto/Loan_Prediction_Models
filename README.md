@@ -1,8 +1,44 @@
 # Loan Approval Prediction
 
-Build models to predict loan approval using the Kaggle Loan Approval Prediction Dataset. We explore the dataset, perform data preprocessing, and apply a comparison between a Logistic Regression Model and a Decision Tree Classifier, along with a winner based on measured performance.
+End-to-end loan approval prediction pipeline using Logistic Regression and Decision Tree Classifier, with interactive deployment via Flask.
 
-The loan approval dataset is a collection of financial records and associated information used to determine the eligibility of individuals or organizations for obtaining loans from a lending institution. It includes various factors such as CIBIL score, income, employment status, loan term, loan amount, asset value, and loan status. This dataset is commonly used in machine learning and data analysis to develop models and algorithms that predict the likelihood of loan approval based on the given features.
+---
+
+# Table of Content
+
+- [Background](#background)
+- [Purpose](#purpose)
+- [Features](#features)
+- [Dataset](#dataset)
+- [Project Structure](#project-structure)
+- [Architecture Overview](#architecture-overview)
+  - Loan_Approval.ipynb
+  - Flask_App.py
+  - routes.py
+  - loan_model.pkl
+  - requirements.txt
+  - results.png
+  - templates/index.html
+  - .env
+  - .gitignore
+- [Steps](#steps)
+- [Code Explanation](#code-explanation)
+- [Results](#results)
+- [Data Visualization](#data-visualization)
+- [Conclusion](#results-and-conclusion)
+- [How to Run](#how-to-run)
+- [User Input](#user-input)
+- [Deployment with Flask](#deployment-with-flask)
+- [Limitations](#limitations)
+- [Recommendations](#recommendations)
+- [Future Work](#future-work)
+- [Author](#author)
+
+---
+
+## Background
+
+Build models to predict loan approval using the Kaggle Loan Approval Prediction Dataset. We explore the dataset, perform data preprocessing, and apply a comparison between a Logistic Regression Model and a Decision Tree Classifier, along with a winner based on measured performance.
 
 The program also allows users to input their own data and receive a loan approval prediction based on the best performed trained model.
 
@@ -10,9 +46,43 @@ Note: The dataset was originally sourced from Kaggle but used locally to ensure 
 
 ---
 
+## Purpose
+
+This project aims to help users assess their eligibility for home loans by predicting loan approvals based on financial and personal data. It also serves as a learning exercise to enhance machine learning, data preprocessing, modular software design, and deployment skills using real-world datasets.
+
+---
+
+## Features
+
+
+#### Data Handling
+- Real Kaggle dataset integration.
+- Missing value imputation using medians.
+- One-hot encoding of categorical variables.
+- Scaled features using `StandardScaler`.
+
+#### Model Training and Evaluation
+- Logistic Regression and Decision Tree Classifier implementation.
+- Model comparison using Accuracy, ROC AUC, Confusion Matrix, and Classification Report.
+- Model serialization using `joblib`.
+
+#### Deployment
+- Flask web app for real-time predictions.
+- Secure environment handling using `.env`.
+- Modular `routes.py` to ensure clean routing.
+
+#### Development and Testing
+- Highly modular code structure for low coupling and high cohesion.
+- Visual result representation using Matplotlib and Seaborn.
+- Dependency management via `requirements.txt`.
+
+---
+
 ## Dataset
 
-The dataset contains information about various features of people who applied for a Loan. Key features include:
+The loan approval dataset is a collection of financial records and associated information used to determine the eligibility of individuals or organizations for obtaining loans from a lending institution. This dataset is commonly used in machine learning and data analysis to develop models and algorithms that predict the likelihood of loan approval based on the given features.
+
+Key features include:
 
 - loan_id
 
@@ -42,14 +112,49 @@ The dataset contains information about various features of people who applied fo
 
 ---
 
-## Requirements
+# Project Structure 
 
+```plaintext
+Project/
+├── Loan_Approval.ipynb
+├── requirements.txt
+├── loan_approval_dataset.csv
+├── Flask_App.py
+├── routes.py
+├── loan_model.pkl
+├── templates/
+│   └── index.html
+├── .env
+└── results.png
+```
+
+---
+
+# Architecture Overview
+
+## Loan_Approval.ipynb
+
+- Contains the steps for data loading, data preprocessing, model selection, model training, model evaluation and comparison.
+- Contains markup code explaining each step of the python code.
+- Imports a data set from kaggle.
+- Perform data preprocessing.
+- One-hot encoded categorical values.
+- Defines features, target and scales the data for model training and evaluation.
+- Trains a Logistic Regression and a Decision Tree classifier.
+- Evaluates the models' results and compares them to come up with the best model.
+- Saves the best model into a 'loan_model.pkl' for Flask Deployment.
+
+## requirements.txt
+
+Contains the necessary libraries for correct usage.
 This project uses the following Python libraries:
 
-- pandas
-- scikit-learn
-- matplotlib
-- seaborn
+- pandas: Used for data preprocessing.
+- scikit-learn: Allows to implement the Decision Tree Classifier and Logistic Regression Models.
+- matplotlib: Permits output data visualization.
+- seaborn: Allows both models' performance to be seen back-to-back.
+- joblib: Encapsulates the best performing model after output analysis.
+- flask: Permits trained model deployment to allow users to access the data predictions.
 
 Note: To install the required libraries, you can run:
 
@@ -57,19 +162,50 @@ Note: To install the required libraries, you can run:
 pip install -r requirements.txt
 ```
 
-- requirements.txt is included within this directory.
+## loan_approval_dataset.csv
 
----
+- Contains the dataset used for model training.
+- It's purpose is to determine if a loan will be approved or denied.
+- Downloaded from Kaggle to ensure long-term accessibility and avoid internet dependency.
 
-## Project Structure 
+## Flask_App.py
 
-```plaintext
-Project/
-├── Loan_Approval.ipynb
-├── requirements.txt
-├── loan_approval_dataset.csv
-└── results.png
-```
+- Loads the code for deploying the Decision Tree Classifier Model through loan_mode.pkl file.
+- Defines the necessary features for model prediction.
+- Allows users to access the trained model and receive predictions based on their inputs regarding loan approvals.
+
+## routes.py
+
+- Contains the routes for the Flask App.
+- Obtains the data from the form created in the index.html file and converts those form values into numerical values through a 'predict' function.
+- Returns the output of user inputs.
+- Divides into different functions to achieve high modularity and improve code corrections or update.
+- Manages URL endpoints and binds user input to prediction logic, separating web routes from core Flask logic for modularity.
+
+## loan_model.pkl
+
+- Encapsulates the trained Decision Tree Classifier Model.
+- It contains the DTC model as it outperformed the Logistic Regression Model.
+- Encapsulation was performed through the 'joblib' library.
+
+## templates/index.html
+
+- Contains an HTML file to create a page where users can directly enter the necessary values for a model prediction to take place.
+- Directly interacts with the Flask_App.py file.
+
+## .env
+
+- File template if environment variables are needed later.
+
+## .gitignore
+
+- File containing data or documents that should be ignored when uploading to github.
+- Contains .env file to ensure data security.
+
+## results.png
+
+- An image representing the results of model evaluation.
+
 ---
 
 ## Steps
@@ -89,8 +225,10 @@ Project/
 
 5. Model Training:
 - Split the data into training and testing sets (80% train, 20% test).
+- A random_state feature was added at the moment of data splitting (random_state=42).
 - Train a Logistic Regression model.
 - Train a Decision Tree Classifier model.
+- StratifiedShuffleSplit or cross_val_score is recommended in future work.
 
 6. Model Evaluation:
 - Evaluate the model using Accuracy Score, Confusion Matrix, Roc Auc Score, and Classification Report.
@@ -151,6 +289,12 @@ macro avg      0.97      0.97      0.97       854
 weighted avg   0.98      0.98      0.98       854
 ```
 
+Based on the above metrics, the Decision Tree Classifier outperforms Logistic Regression and is used as the production model for deployment.
+However, there are more reasons why the DTC model is often a better choice:
+- DTC handles categorical splits and non-linear patterns better.
+- DTC does not require data scaling.
+- Interpretability you can visualize the decision tree.
+
 ---
 
 ## Data Visualization
@@ -209,16 +353,55 @@ This interactive feature allows users to explore potential loan approval outcome
 
 ---
 
+## Deployment with Flask
+
+### Specific Flask Project Structure
+loan_approval_app/
+├── Flask_App.py
+├── routes.py
+├── loan_model.pkl
+├── templates/
+│   └── index.html
+
+### How to Run
+
+- Ensure the 'loan_model.pkl' file is downloaded or created by using the 'Loan_Approval.ipynb' file.
+- Run the 'Flask_App.py' file directly, as it contains 'if __name_ _ == '__main_ _' function.
+- Access the 'index.html' file or copy the expected localhost URL and paste it in your preferred browser.
+- Expected localhost URL: http://127.0.0.1:5000/
+- Enter the required data into the form and click 'Predict' to receive an approval prediction using the trained model.
+
+NOTE: The model will not predict or run until all the required information is proportioned. This was done through the 'index.html' code.
+
+---
+
+## Limitations
+
+PLEASE HAVE IN MIND:
+While the Decision Tree Classifier achieved the best results in this project, it is prone to overfitting. 
+
+---
+
+## Recommendations
+
+In case this project is directly used by or a source of inspiration to another user, the following practices are highly encouraged:
+- Proper hyperparameter tuning (e.g., max depth, min samples split) is recommended to ensure generalization.
+- Implement security through input validation or sanitization.
+- Validate and/or sanitize user inputs in the Flask Deployment.
+- Perform unit testing (recommended through pytest) or manual testing to measure model performance accurately and validate the prediction logic.
+
+---
+
 ## Future Work
 
 - Incorporate more advanced models such as Random Forests or Gradient Boosting.
-- Perform hyperparameter tuning to further optimize model performance.
-- Deploy the model with a simple web interface (e.g., using Streamlit or Flask).
+- Perform hyperparameter tuning to further optimize model performance and avoid overfitting.
 - Implement cross-validation for more robust evaluation.
+- Add histograms of feature distributions, pairplots, or SHAP/TreeExplainer plots to give deeper insight into model behavior.
+- Visualizing which features contributed most to the Decision Tree’s decisions (e.g., model.feature_importances_) to increase transparency.
 
 ---
 
 ## Author
 
 Dennis Alejandro Guerra Calix -- AGCalixto 
-
