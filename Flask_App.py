@@ -1,28 +1,21 @@
 import joblib
-import numpy as np
-import pandas as pd
-from routes import home, predict
+from routes import routes_blueprint
 from flask import Flask
 
-app = Flask(__name__)
 
-model = joblib.load('loan_model.pkl')
+def create_app():
+    app = Flask(__name__)
 
-home()
-predict(model)
+    # Load model once and attach to app config
+    model = joblib.load('loan_model.pkl')
+    app.config['MODEL'] = model
 
-Features = [
-    'no_of_dependents',
-    'income_annum',
-    'loan_amount',
-    'loan_term',
-    'cibil_score',
-    'residential_assets_value',
-    'commercial_assets_value',
-    'luxury_assets_value',
-    'bank_asset_value',
-    'education_ not graduate',
-    'self_employed_ yes']
+    # Register Blueprint
+    app.register_blueprint(routes_blueprint)
+
+    return app
+
 
 if __name__ == '__main__':
+    app = create_app()
     app.run(debug=True)

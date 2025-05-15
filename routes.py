@@ -1,14 +1,15 @@
-from flask import Flask, render_template, request
+from flask import Blueprint, render_template, request, current_app
 
-app = Flask(__name__)
+routes_blueprint = Blueprint('routes', __name__)
 
-@app.route('/')
+
+@routes_blueprint.route('/')
 def home():
     return render_template('index.html')
 
 
-@app.route('/predict', methods=['POST'])
-def predict(model):
+@routes_blueprint.route('/predict', methods=['POST'])
+def predict():
     # Get the data from the form (index.html)
     form = request.form
 
@@ -27,8 +28,8 @@ def predict(model):
         1 if form['self_employed'] == 'Yes' else 0
     ]]
 
-
-    prediction = model.predict([data][0])
+    model = current_app.config['MODEL']
+    prediction = model.predict(data)
     result = 'Approved ✅' if prediction == 1 else 'Rejected ❌'
 
     return render_template('index.html', result=result)

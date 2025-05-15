@@ -15,6 +15,7 @@ End-to-end loan approval prediction pipeline using Logistic Regression and Decis
   - Loan_Approval.ipynb
   - Flask_App.py
   - routes.py
+  - test_app.py
   - loan_model.pkl
   - requirements.txt
   - results.png
@@ -29,6 +30,7 @@ End-to-end loan approval prediction pipeline using Logistic Regression and Decis
 - [How to Run](#how-to-run)
 - [User Input](#user-input)
 - [Deployment with Flask](#deployment-with-flask)
+- [Testing](#testing)
 - [Limitations](#limitations)
 - [Recommendations](#recommendations)
 - [Future Work](#future-work)
@@ -121,6 +123,7 @@ Project/
 ├── loan_approval_dataset.csv
 ├── Flask_App.py
 ├── routes.py
+├── test_app.py
 ├── loan_model.pkl
 ├── templates/
 │   └── index.html
@@ -181,6 +184,13 @@ pip install -r requirements.txt
 - Returns the output of user inputs.
 - Divides into different functions to achieve high modularity and improve code corrections or update.
 - Manages URL endpoints and binds user input to prediction logic, separating web routes from core Flask logic for modularity.
+
+## test_app.py
+
+- Imports pytest for testing automatization.
+- Creates a fake pytest client, which is going to test the functions related to the UI code.
+- Tests the home page by verifying that the status code is 200.
+- Tests the prediction endpoint by simulating a form submission and verifying that a valid prediction response is returned.
 
 ## loan_model.pkl
 
@@ -359,6 +369,7 @@ This interactive feature allows users to explore potential loan approval outcome
 loan_approval_app/
 ├── Flask_App.py
 ├── routes.py
+├── test_app.py
 ├── loan_model.pkl
 ├── templates/
 │   └── index.html
@@ -372,6 +383,21 @@ loan_approval_app/
 - Enter the required data into the form and click 'Predict' to receive an approval prediction using the trained model.
 
 NOTE: The model will not predict or run until all the required information is proportioned. This was done through the 'index.html' code.
+
+---
+
+## Testing
+
+Automated testing is handled using `pytest`.
+
+### Tests Include:
+- **Home Page Test**: Verifies that the root URL (`'/'`) loads successfully with status code 200.
+- **Prediction Form Test**: Mocks a POST request to the `/predict` endpoint with sample data to ensure the model responds and renders a result.
+
+### Run tests using:
+```bash
+python pytest.py
+```
 
 ---
 
